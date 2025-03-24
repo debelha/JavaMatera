@@ -17,7 +17,7 @@ public class TesteSet {
 
         contas.forEach(conta -> {
             System.out.println("Conta: " + conta);
-            System.out.println("Hash: " + contas.hashCode());
+            System.out.println("Hash: " + conta.hashCode());
         });
     }
 }
