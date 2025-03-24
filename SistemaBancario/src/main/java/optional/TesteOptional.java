@@ -12,7 +12,7 @@ public class TesteOptional {
         if(optionalConta.isPresent()) {
             System.out.println("Saldo: " + optionalConta.get().getSaldo());
         } else {
-            System.out.println("Não foi localizado a Conta");
+            System.out.println("A conta não foi localizada!");
         }
     }
 
@@ -21,7 +21,10 @@ public class TesteOptional {
     }
 
     public static Optional<Conta> obtemContaSemErro() {
-        return Optional.of(null);
+        return Optional.of(Conta.builder()
+                .numeroConta(1L)
+                .saldo(300.00)
+                .build());
     }
 
 }
