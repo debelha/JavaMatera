@@ -7,8 +7,10 @@ public class TesteSwitch {
 
         exibeTipoConta(contaCorrente);
         exibeTipoConta(contaPoupanca);
+        exibeTipoContaJava17(contaCorrente);
     }
 
+    //ESTRUTURA PADRÃO
     private static void exibeTipoConta(Conta conta) {
         switch (conta.getTipoConta()) {
             case "Conta Corrente":
@@ -23,5 +25,17 @@ public class TesteSwitch {
             default:
                 System.out.println("Não identificado o tipo de conta");
         }
+    }
+
+    //ESTRUTURA SIMPLIFICADA
+    private static void exibeTipoContaJava17(Conta conta) {
+        String mensagem = switch (conta.getTipoConta()) {
+            case "Conta Corrente" -> "É uma conta corrente.";
+            case "Conta Comum" -> "É uma conta comum.";
+            case "Conta Poupanca" -> "É uma conta poupança.";
+            default -> "Não identificado o tipo de conta.";
+        };
+
+        System.out.println(mensagem);
     }
 }
