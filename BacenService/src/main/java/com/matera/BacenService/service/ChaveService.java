@@ -7,6 +7,8 @@ import com.matera.BacenService.repository.ChaveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 @RequiredArgsConstructor
 public class ChaveService {
@@ -20,6 +22,16 @@ public class ChaveService {
                 .build();
 
         chave = chaveRepository.save(chave);
+
+        return ChaveResponseDTO.builder()
+                .chave(chave.getChave())
+                .ativa(chave.getAtiva())
+                .build();
+    }
+
+    public ChaveResponseDTO buscarChave (final String chavePesquisada) {
+        Chave chave = chaveRepository.findByChave(chavePesquisada).orElseThrow(
+                () -> new RuntimeException());
 
         return ChaveResponseDTO.builder()
                 .chave(chave.getChave())
