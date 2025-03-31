@@ -14,7 +14,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RequiredArgsConstructor
 public class ChaveController {
 
-    private final ChaveService chaveService;s 
+    private final ChaveService chaveService;
 
     @PostMapping
     public ResponseEntity<ChaveResponseDTO> criarChave(@RequestBody ChaveRequestDTO chaveRequestDTO) {
