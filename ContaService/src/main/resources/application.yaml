@@ -1,10 +1,10 @@
 server:
-  port: 9000
+  port: 8081
 spring:
   applicatiion:
     name: conta-service
   datasource:
-    #   url: jdbc:h2:mem:bacen_service
+    #   url: jdbc:h2:mem:conta_service
     url: jdbc:h2:file:./data/conta_service
     driver-class-name: org.h2.Driver
     username: admin
