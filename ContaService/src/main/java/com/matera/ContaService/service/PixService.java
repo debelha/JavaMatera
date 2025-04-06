@@ -5,6 +5,7 @@ import com.matera.ContaService.dto.PixRequestDTO;
 import com.matera.ContaService.dto.PixResponseDTO;
 import com.matera.ContaService.exception.ContaInexistenteException;
 import com.matera.ContaService.exception.SaldoInsuficienteException;
+import com.matera.ContaService.feign.BacenService;
 import com.matera.ContaService.model.Conta;
 import com.matera.ContaService.model.Pix;
 import com.matera.ContaService.repository.ContaRepository;
@@ -23,6 +24,7 @@ public class PixService {
 
     private final PixRepository pixRepository;
     private final ContaRepository contaRepository;
+    private final BacenService bacenService;
 
     @Transactional
     public PixResponseDTO realizarPix(PixRequestDTO pixRequestDTO) {
@@ -41,13 +43,17 @@ public class PixService {
             );
         }
 
-        Optional<Conta> contaPagadorOptional = contaRepository.findByChavePix(pixRequestDTO.getChavePixPagador());
+        String chavePagador = bacenService.buscarChave(pixRequestDTO.getChavePixPagador()).getChave();
+
+        Optional<Conta> contaPagadorOptional = contaRepository.findByChavePix(chavePagador);
 
         if (contaPagadorOptional.isEmpty()) {
             throw new ContaInexistenteException(String.format("Conta com a chave %s não existe", pixRequestDTO.getChavePixPagador()));
         }
 
-        Optional<Conta> contaRecebedorOptional = contaRepository.findByChavePix(pixRequestDTO.getChavePixRecebedor());
+        String chaveRecebedor = bacenService.buscarChave(pixRequestDTO.getChavePixRecebedor()).getChave();
+
+        Optional<Conta> contaRecebedorOptional = contaRepository.findByChavePix(chaveRecebedor);
 
         if (contaRecebedorOptional.isEmpty()) {
             throw new ContaInexistenteException(String.format("Conta com a chave %s não existe", pixRequestDTO.getChavePixRecebedor()));

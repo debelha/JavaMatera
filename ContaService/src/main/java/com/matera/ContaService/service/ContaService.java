@@ -5,8 +5,10 @@ import com.matera.ContaService.dto.ContaRequestDTO;
 import com.matera.ContaService.dto.ContaResponseDTO;
 import com.matera.ContaService.exception.ContaExistenteException;
 import com.matera.ContaService.exception.ContaInexistenteException;
+import com.matera.ContaService.feign.BacenService;
 import com.matera.ContaService.model.Conta;
 import com.matera.ContaService.repository.ContaRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,9 @@ import java.util.UUID;
 public class ContaService {
 
     public final ContaRepository contaRepository;
+    private final BacenService bacenService;
 
+    @Transactional
     public ContaResponseDTO criarConta(ContaRequestDTO contaRequestDTO) {
         Optional<Conta> contaOptional = contaRepository.findByNomeAndContaAndChavePix(
                 contaRequestDTO.getNome(),
@@ -43,6 +47,8 @@ public class ContaService {
                 .build();
 
         Conta contaSalva = contaRepository.save(conta);
+
+        bacenService.criarChave(contaSalva.getChavePix());
 
         ContaResponseDTO contaResponseDTO = ContaResponseDTO.builder()
                 .id(contaSalva.getId())
