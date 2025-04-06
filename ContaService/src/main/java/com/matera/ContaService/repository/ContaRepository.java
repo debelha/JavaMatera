@@ -7,9 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ContaRepository extends JpaRepository<Conta, UUID>{
-    /*Optional<Conta> findByChavePix(String chavePixPagador); */
+    Optional<Conta> findByChavePix(String chavePixPagador);
 
     Optional<Conta> findByNomeAndContaAndChavePix(String nome, Integer conta, String chavePix);
-
-
 }
