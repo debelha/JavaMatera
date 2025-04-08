@@ -1,4 +1,4 @@
-# JavaMatera
+# java-matera
 Repository for storing tasks related to the Java Bootcamp by Matera
 
 ### Documentation
